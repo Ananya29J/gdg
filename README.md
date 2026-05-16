@@ -25,20 +25,6 @@ PulseX is a **Next-Gen IPL Fan Engagement Platform** built for Google Developer 
 * **Scroll Engine:** Lenis (Smooth, inertial scrolling)
 * **Icons:** Lucide React
 
-## 🚀 Getting Started
-
-First, install dependencies:
-```bash
-npm install
-```
-
-Run the development server:
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to experience the platform.
-
 ## 🤝 Next Steps for Production
 
 This codebase is currently architected as a high-fidelity prototype utilizing a local simulation engine for demonstration purposes. To take this to production:
