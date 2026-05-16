@@ -125,14 +125,7 @@ interface AppState {
   setAiInsight: (insight: string) => void;
 }
 
-const PLAYERS_T1: Player[] = [
-  { name: "V. Kohli", runs: 0, balls: 0, fours: 0, sixes: 0 },
-  { name: "R. Sharma", runs: 0, balls: 0, fours: 0, sixes: 0 },
-];
-const BOWLERS_T2: Bowler[] = [
-  { name: "J. Bumrah", overs: 0, runs: 0, wickets: 0 },
-  { name: "M. Shami", overs: 0, runs: 0, wickets: 0 },
-];
+
 
 const INITIAL_LEADERBOARD: LeaderboardEntry[] = [
   { rank: 1, username: "CricketKing99", avatar: "🏏", xp: 12450, accuracy: 78, streak: 12, badge: "🔥", aura: "gold" },

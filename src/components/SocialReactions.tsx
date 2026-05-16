@@ -21,7 +21,7 @@ export default function SocialReactions() {
               animate={{ 
                 opacity: [0, 1, 1, 0], 
                 y: "-10vh", 
-                x: [`${r.x}vw`, `${r.x + (Math.random() * 10 - 5)}vw`],
+                x: [`${r.x}vw`, `${r.x + (r.id.length % 10 - 5)}vw`],
                 scale: [0.5, 1.5, 1] 
               }}
               exit={{ opacity: 0 }}

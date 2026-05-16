@@ -82,13 +82,7 @@ export function useLiveSimulation() {
   const store = useAppStore();
 
   useEffect(() => {
-    let ballInterval: ReturnType<typeof setInterval>;
-    let leaderboardInterval: ReturnType<typeof setInterval>;
-    let insightInterval: ReturnType<typeof setInterval>;
-    let tensionInterval: ReturnType<typeof setInterval>;
-
-    // Ball-by-ball simulation every 5 seconds
-    ballInterval = setInterval(() => {
+    const ballInterval = setInterval(() => {
       const outcome = getWeightedBall();
       const commentary = randomItem(COMMENTARY_POOL[outcome] || COMMENTARY_POOL["dot"]);
 
@@ -97,7 +91,7 @@ export function useLiveSimulation() {
       let newWickets = m.team1Wickets;
       let newBall = m.currentBall + 1;
       let newOver = m.currentOver;
-      let newBalls: BallOutcome[] = [...m.recentBalls.slice(-5), outcome];
+      const newBalls: BallOutcome[] = [...m.recentBalls.slice(-5), outcome];
       let lastEvent: typeof m.lastEvent = "run";
       let tension = m.tensionLevel;
 
@@ -119,7 +113,6 @@ export function useLiveSimulation() {
       const rrr = ballsLeft > 0 ? (needed / ballsLeft) * 6 : 99;
       const winProb = Math.max(5, Math.min(95, 100 - (rrr / 36) * 100 + randomBetween(-5, 5)));
 
-      const heartbeat = tension > 70;
       const hype = outcome === "6" || outcome === "W";
 
       store.updateMatch({
@@ -150,17 +143,17 @@ export function useLiveSimulation() {
     }, 5000);
 
     // Leaderboard shuffle every 12 seconds
-    leaderboardInterval = setInterval(() => {
+    const leaderboardInterval = setInterval(() => {
       store.updateLeaderboard();
     }, 12000);
 
     // AI insight rotation every 20 seconds
-    insightInterval = setInterval(() => {
+    const insightInterval = setInterval(() => {
       store.setAiInsight(randomItem(AI_INSIGHTS_POOL));
     }, 20000);
 
     // Tension fluctuation every 8 seconds
-    tensionInterval = setInterval(() => {
+    const tensionInterval = setInterval(() => {
       const current = useAppStore.getState().match.tensionLevel;
       const delta = randomBetween(-8, 8);
       const newTension = Math.max(20, Math.min(100, current + delta));
@@ -174,5 +167,5 @@ export function useLiveSimulation() {
       clearInterval(insightInterval);
       clearInterval(tensionInterval);
     };
-  }, []);
+  }, [store]);
 }
