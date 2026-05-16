@@ -182,8 +182,8 @@ const PREDICTION_POOL: Omit<ActivePrediction, "selectedOption" | "result" | "isC
   {
     question: "Who wins the match?",
     options: [
-      { id: "t1", label: "CSK Chennai", emoji: "💛", odds: 1.9 },
-      { id: "t2", label: "LSG Lucknow", emoji: "💙", odds: 2.1 },
+      { id: "t1", label: "Chennai Super Kings", emoji: "💛", odds: 1.9 },
+      { id: "t2", label: "Lucknow Super Giants", emoji: "💙", odds: 2.1 },
     ],
     expiresIn: 30,
     xpReward: 150,
@@ -203,8 +203,8 @@ const AI_INSIGHTS = [
 
 export const useAppStore = create<AppState>((set, get) => ({
   match: {
-    team1: "CSK Chennai",
-    team2: "LSG Lucknow",
+    team1: "Chennai Super Kings",
+    team2: "Lucknow Super Giants",
     team1Score: 76,
     team2Score: 186,
     team1Wickets: 2,

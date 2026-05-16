@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PulseX 🏏⚡
 
-## Getting Started
+PulseX is a **Next-Gen IPL Fan Engagement Platform** built for Google Developer Groups (GDG). It transforms the traditional "second screen" cricket viewing experience into a highly interactive, gamified, and cinematic digital arena.
 
-First, run the development server:
+## 🌟 Key Features
 
+* **Live Simulation Engine:** A deterministic, client-side engine that simulates a live T20 cricket match ball-by-ball, complete with tension mechanics, win probabilities, and dynamic commentary.
+* **Tinder-Style Predictions:** Swipe on dynamic, high-stakes predictions (e.g., "Will the next ball be a six?", "Who wins the match?"). Correct predictions instantly update your global XP.
+* **Real-Time Leaderboard:** A fully reactive global ranking system. As fans earn XP through predictions and mini-games, they dynamically climb the ranks in real-time.
+* **Mini-Games Arcade:** Built-in casual games to keep fans engaged during timeouts and innings breaks:
+  * 🎯 **Perfect Timing (Yorker Dodge):** A reflex timing game to hit the sweet spot.
+  * 🧤 **Keeper Reflex:** A split-second directional reaction game.
+  * ⚡ **Tap Powerplay:** A frenetic screen-tapping challenge.
+  * 🏏 **Catch The Ball:** An arcade-style falling object catcher.
+  * 🧠 **Trivia Blitz:** A rapid-fire IPL knowledge test.
+* **AI Match Companion:** An integrated context-aware 3D AI companion that analyzes current match momentum, player strike rates, and tension levels to provide actionable insights.
+* **Global Social Reactions:** A floating barrage of emojis synced to the live match feed.
+
+## 🛠️ Tech Stack
+
+* **Framework:** Next.js 15 (App Router)
+* **Styling:** Tailwind CSS (Custom Neon-Dark aesthetic)
+* **Animations:** Framer Motion (Pop layouts, springs, and orchestrated sequences)
+* **State Management:** Zustand (Global immutable state synced across components)
+* **Scroll Engine:** Lenis (Smooth, inertial scrolling)
+* **Icons:** Lucide React
+
+## 🚀 Getting Started
+
+First, install dependencies:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Run the development server:
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Open [http://localhost:3000](http://localhost:3000) with your browser to experience the platform.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🤝 Next Steps for Production
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This codebase is currently architected as a high-fidelity prototype utilizing a local simulation engine for demonstration purposes. To take this to production:
+1. Replace the `useLiveSimulation.ts` engine with WebSockets connected to a live sports data provider (e.g., Sportradar, Cricbuzz API).
+2. Integrate **Firebase Firestore / Realtime Database** to persist the `Leaderboard` and broadcast `Social Reactions` globally across all connected clients.

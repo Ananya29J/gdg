@@ -6,7 +6,7 @@ import { User, Swords, Shield, Zap, Target } from "lucide-react";
 
 const SQUADS = {
   team1: {
-    name: "CSK Chennai",
+    name: "Chennai Super Kings",
     players: [
       { name: "R. Gaikwad (c)", role: "Batter", runs: 34, balls: 28, out: false },
       { name: "R. Ravindra", role: "Batter", runs: 12, balls: 8, out: true },
@@ -22,7 +22,7 @@ const SQUADS = {
     ]
   },
   team2: {
-    name: "LSG Lucknow",
+    name: "Lucknow Super Giants",
     players: [
       { name: "Q. de Kock", role: "Batter", runs: 45, balls: 31, out: true },
       { name: "KL Rahul (c)", role: "Batter", runs: 82, balls: 54, out: true },
