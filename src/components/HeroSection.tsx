@@ -22,22 +22,19 @@ const FLOATING_PARTICLES = Array.from({ length: 50 }, (_, i) => ({
 }));
 
 export default function HeroSection() {
-  const { setActiveTab, match, setAiOpen } = useAppStore();
+  const { match, setAiOpen } = useAppStore();
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: containerRef });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   const scrollToLive = () => {
-    setActiveTab("pulse");
-    setTimeout(() => {
-      const el = document.getElementById("live-pulse");
-      if (el) {
-        const yOffset = -100;
-        const y = el.getBoundingClientRect().top + window.scrollY + yOffset;
-        window.scrollTo({ top: y, behavior: "smooth" });
-      }
-    }, 100);
+    const el = document.getElementById("live-pulse");
+    if (el) {
+      const yOffset = -100;
+      const y = el.getBoundingClientRect().top + window.scrollY + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
   };
 
   return (

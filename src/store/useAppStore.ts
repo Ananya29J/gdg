@@ -103,7 +103,6 @@ interface AppState {
   activePredictions: (ActivePrediction & { id: string })[];
   leaderboard: LeaderboardEntry[];
   reactions: Reaction[];
-  activeTab: string;
   miniGameActive: boolean;
   heartbeatMode: boolean;
   hypeStorm: boolean;
@@ -111,7 +110,6 @@ interface AppState {
   isAiOpen: boolean;
 
   // Actions
-  setActiveTab: (tab: string) => void;
   setAiOpen: (open: boolean) => void;
   addReaction: (emoji: string) => void;
   removeReaction: (id: string) => void;
@@ -253,14 +251,12 @@ export const useAppStore = create<AppState>((set, get) => ({
   ],
   leaderboard: INITIAL_LEADERBOARD,
   reactions: [],
-  activeTab: "pulse",
   miniGameActive: false,
   heartbeatMode: false,
   hypeStorm: false,
   aiInsight: AI_INSIGHTS[0],
   isAiOpen: false,
 
-  setActiveTab: (tab) => set({ activeTab: tab }),
   setAiOpen: (open) => set({ isAiOpen: open }),
 
   addReaction: (emoji) => {

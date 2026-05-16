@@ -5,19 +5,25 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Zap, Trophy, GamepadIcon, Users, Brain, Menu, X } from "lucide-react";
 import { useAppStore } from "@/store/useAppStore";
 import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
-  { id: "pulse", label: "Live Pulse", icon: Zap, color: "#00D4FF" },
-  { id: "predict", label: "Predict", icon: Trophy, color: "#A855F7" },
-  { id: "leaderboard", label: "Leaders", icon: Users, color: "#FF6B00" },
-  { id: "games", label: "Games", icon: GamepadIcon, color: "#39FF14" },
-  { id: "ai", label: "AI Coach", icon: Brain, color: "#FF2D55" },
+  { id: "pulse", label: "Live Pulse", icon: Zap, color: "#00D4FF", path: "/" },
+  { id: "predict", label: "Predict", icon: Trophy, color: "#A855F7", path: "/predictions" },
+  { id: "leaderboard", label: "Leaders", icon: Users, color: "#FF6B00", path: "/leaderboard" },
+  { id: "games", label: "Games", icon: GamepadIcon, color: "#39FF14", path: "/games" },
+  { id: "ai", label: "AI Coach", icon: Brain, color: "#FF2D55", path: "/#" },
 ];
 
 export default function FloatingNavbar() {
-  const { activeTab, setActiveTab } = useAppStore();
+  const pathname = usePathname();
+  const { setAiOpen } = useAppStore();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Determine active tab based on pathname
+  const activeTab = NAV_ITEMS.find(item => item.path === pathname)?.id || "pulse";
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -25,27 +31,12 @@ export default function FloatingNavbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleNavClick = (id: string) => {
-    setActiveTab(id);
-    
-    // Map tab IDs to element IDs
-    const sectionMap: Record<string, string> = {
-      pulse: "live-pulse",
-      predict: "prediction-engine",
-      leaderboard: "leaderboard",
-      games: "mini-games",
-      ai: "main-dashboard"
-    };
-    
-    // Small delay to ensure tab switching renders the element if it was hidden
-    setTimeout(() => {
-      const el = document.getElementById(sectionMap[id] || "main-dashboard");
-      if (el) {
-        const yOffset = -100; // Account for floating navbar
-        const y = el.getBoundingClientRect().top + window.scrollY + yOffset;
-        window.scrollTo({ top: y, behavior: "smooth" });
-      }
-    }, 100);
+  const handleNavClick = (item: typeof NAV_ITEMS[0]) => {
+    if (item.id === 'ai') {
+      setAiOpen(true);
+      return;
+    }
+    setMobileOpen(false);
   };
 
   return (
@@ -77,35 +68,35 @@ export default function FloatingNavbar() {
 
           {/* Nav items */}
           {NAV_ITEMS.map((item) => (
-            <motion.button
-              key={item.id}
-              onClick={() => handleNavClick(item.id)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={cn(
-                "relative flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300",
-                activeTab === item.id ? "text-white" : "text-white/50 hover:text-white/80"
-              )}
-            >
-              {activeTab === item.id && (
-                <motion.div
-                  layoutId="nav-pill"
-                  className="absolute inset-0 rounded-xl"
-                  style={{ background: `${item.color}20`, border: `1px solid ${item.color}40` }}
-                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                />
-              )}
-              <item.icon className="w-3.5 h-3.5 relative z-10" style={{ color: activeTab === item.id ? item.color : "currentColor" }} />
-              <span className="relative z-10">{item.label}</span>
-              {activeTab === item.id && (
-                <motion.span
-                  className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
-                  style={{ backgroundColor: item.color, boxShadow: `0 0 6px ${item.color}` }}
-                  animate={{ opacity: [1, 0.4, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-              )}
-            </motion.button>
+            <Link key={item.id} href={item.path} onClick={() => handleNavClick(item)}>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={cn(
+                  "relative flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300 cursor-pointer",
+                  activeTab === item.id ? "text-white" : "text-white/50 hover:text-white/80"
+                )}
+              >
+                {activeTab === item.id && (
+                  <motion.div
+                    layoutId="nav-pill"
+                    className="absolute inset-0 rounded-xl"
+                    style={{ background: `${item.color}20`, border: `1px solid ${item.color}40` }}
+                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  />
+                )}
+                <item.icon className="w-3.5 h-3.5 relative z-10" style={{ color: activeTab === item.id ? item.color : "currentColor" }} />
+                <span className="relative z-10">{item.label}</span>
+                {activeTab === item.id && (
+                  <motion.span
+                    className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
+                    style={{ backgroundColor: item.color, boxShadow: `0 0 6px ${item.color}` }}
+                    animate={{ opacity: [1, 0.4, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                )}
+              </motion.div>
+            </Link>
           ))}
 
           <div className="w-px h-6 bg-white/10 mx-1" />
@@ -157,21 +148,21 @@ export default function FloatingNavbar() {
             >
               <div className="p-3 grid grid-cols-3 gap-2">
                 {NAV_ITEMS.map((item) => (
-                  <button
-                    key={item.id}
-                    onClick={() => { setActiveTab(item.id); setMobileOpen(false); }}
-                    className={cn(
-                      "flex flex-col items-center gap-1 p-3 rounded-xl text-xs font-semibold transition-all",
-                      activeTab === item.id ? "text-white" : "text-white/50"
-                    )}
-                    style={{
-                      background: activeTab === item.id ? `${item.color}20` : "transparent",
-                      border: `1px solid ${activeTab === item.id ? item.color + "40" : "transparent"}`,
-                    }}
-                  >
-                    <item.icon className="w-5 h-5" style={{ color: item.color }} />
-                    {item.label}
-                  </button>
+                  <Link key={item.id} href={item.path} onClick={() => handleNavClick(item)}>
+                    <div
+                      className={cn(
+                        "flex flex-col items-center gap-1 p-3 rounded-xl text-xs font-semibold transition-all cursor-pointer",
+                        activeTab === item.id ? "text-white" : "text-white/50"
+                      )}
+                      style={{
+                        background: activeTab === item.id ? `${item.color}20` : "transparent",
+                        border: `1px solid ${activeTab === item.id ? item.color + "40" : "transparent"}`,
+                      }}
+                    >
+                      <item.icon className="w-5 h-5" style={{ color: item.color }} />
+                      {item.label}
+                    </div>
+                  </Link>
                 ))}
               </div>
             </motion.div>
@@ -188,33 +179,33 @@ export default function FloatingNavbar() {
       >
         <div className="flex items-center justify-around px-2 py-2">
           {NAV_ITEMS.map((item) => (
-            <motion.button
-              key={item.id}
-              onClick={() => handleNavClick(item.id)}
-              whileTap={{ scale: 0.85 }}
-              className="flex flex-col items-center gap-1 p-2 rounded-xl min-w-[56px]"
-            >
-              <div className="relative">
-                <item.icon
-                  className="w-5 h-5 transition-all duration-300"
-                  style={{ color: activeTab === item.id ? item.color : "rgba(255,255,255,0.35)" }}
-                />
-                {activeTab === item.id && (
-                  <motion.div
-                    layoutId="dock-indicator"
-                    className="absolute -inset-2 rounded-xl -z-10"
-                    style={{ background: `${item.color}15` }}
-                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                  />
-                )}
-              </div>
-              <span
-                className="text-[10px] font-semibold transition-colors duration-300"
-                style={{ color: activeTab === item.id ? item.color : "rgba(255,255,255,0.35)" }}
+            <Link key={item.id} href={item.path} onClick={() => handleNavClick(item)}>
+              <motion.div
+                whileTap={{ scale: 0.85 }}
+                className="flex flex-col items-center gap-1 p-2 rounded-xl min-w-[56px] cursor-pointer"
               >
-                {item.label}
-              </span>
-            </motion.button>
+                <div className="relative">
+                  <item.icon
+                    className="w-5 h-5 transition-all duration-300"
+                    style={{ color: activeTab === item.id ? item.color : "rgba(255,255,255,0.35)" }}
+                  />
+                  {activeTab === item.id && (
+                    <motion.div
+                      layoutId="dock-indicator"
+                      className="absolute -inset-2 rounded-xl -z-10"
+                      style={{ background: `${item.color}15` }}
+                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                </div>
+                <span
+                  className="text-[10px] font-semibold transition-colors duration-300"
+                  style={{ color: activeTab === item.id ? item.color : "rgba(255,255,255,0.35)" }}
+                >
+                  {item.label}
+                </span>
+              </motion.div>
+            </Link>
           ))}
         </div>
       </motion.div>

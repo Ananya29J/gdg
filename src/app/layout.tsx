@@ -27,6 +27,8 @@ export const metadata: Metadata = {
   },
 };
 
+import AppWrapper from "@/components/AppWrapper";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -35,7 +37,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${outfit.variable} ${geistMono.variable}`}>
       <body className="bg-deep-space text-white antialiased overflow-x-hidden">
-        {children}
+        <AppWrapper>
+          {children}
+        </AppWrapper>
       </body>
     </html>
   );
