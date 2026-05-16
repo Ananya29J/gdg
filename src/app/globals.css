@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-outfit: "Outfit", sans-serif;
+    --electric-blue: #00D4FF;
+    --neon-purple: #A855F7;
+    --crimson-red: #FF2D55;
+    --hot-pink: #FF0080;
+    --cyber-orange: #FF6B00;
+    --lime-green: #39FF14;
+    --deep-space: #050714;
+    --space-dark: #0A0E1A;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--deep-space);
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: var(--deep-space);
+    color: #ffffff;
+    font-family: "Outfit", var(--font-geist-sans), sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a0e1a;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #00D4FF, #A855F7);
+    border-radius: 999px;
+  }
+}
+
+@layer utilities {
+  /* Glassmorphism */
+  .glass {
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .glass-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+
+  /* Neon text effects */
+  .text-neon-blue {
+    color: #00D4FF;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.8), 0 0 30px rgba(0, 212, 255, 0.4);
+  }
+  .text-neon-purple {
+    color: #A855F7;
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.8), 0 0 30px rgba(168, 85, 247, 0.4);
+  }
+  .text-neon-red {
+    color: #FF2D55;
+    text-shadow: 0 0 10px rgba(255, 45, 85, 0.8), 0 0 30px rgba(255, 45, 85, 0.4);
+  }
+  .text-neon-green {
+    color: #39FF14;
+    text-shadow: 0 0 10px rgba(57, 255, 20, 0.8), 0 0 30px rgba(57, 255, 20, 0.4);
+  }
+  .text-gradient-neon {
+    background: linear-gradient(135deg, #00D4FF, #A855F7, #FF2D55);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-blue-purple {
+    background: linear-gradient(135deg, #00D4FF, #A855F7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .text-gradient-fire {
+    background: linear-gradient(135deg, #FF6B00, #FF2D55, #FF0080);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glow borders */
+  .border-neon-blue {
+    border-color: rgba(0, 212, 255, 0.5);
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.3), inset 0 0 15px rgba(0, 212, 255, 0.05);
+  }
+  .border-neon-purple {
+    border-color: rgba(168, 85, 247, 0.5);
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.3), inset 0 0 15px rgba(168, 85, 247, 0.05);
+  }
+
+  /* Ambient glow backgrounds */
+  .glow-blue {
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.4), 0 0 80px rgba(0, 212, 255, 0.2);
+  }
+  .glow-purple {
+    box-shadow: 0 0 40px rgba(168, 85, 247, 0.4), 0 0 80px rgba(168, 85, 247, 0.2);
+  }
+  .glow-red {
+    box-shadow: 0 0 40px rgba(255, 45, 85, 0.4), 0 0 80px rgba(255, 45, 85, 0.2);
+  }
+  .glow-green {
+    box-shadow: 0 0 40px rgba(57, 255, 20, 0.4), 0 0 80px rgba(57, 255, 20, 0.2);
+  }
+
+  /* Noise texture overlay */
+  .noise::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+  }
+
+  /* Shimmer animation */
+  .shimmer {
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.08) 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+
+  /* Hide scrollbar but allow scroll */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
